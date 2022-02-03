@@ -14,6 +14,7 @@ from functools import partial
 from ..config import *
 from ..message import *
 
+
 class MenuBar(Menu):
     def __init__(self, master, visible=True):
 
@@ -63,8 +64,8 @@ class MenuBar(Menu):
         for i, name in self.root.text.constraint.items():
 
             constmenu.add_checkbutton(label=str(name).title(),
-                                      command  = partial(self.root.set_constraint, i),
-                                      variable = self.root.text.constraint.using[i])
+                                      command=partial(self.root.set_constraint, i),
+                                      variable=self.root.text.constraint.using[i])
 
         codemenu.add_cascade(label="Set Constraint", menu=constmenu)
 
@@ -77,8 +78,8 @@ class MenuBar(Menu):
         for name, interpreter in langnames.items():
 
             langmenu.add_checkbutton(label=langtitles[name],
-                                     command  = partial(self.root.set_interpreter, interpreter),
-                                     variable = self.root.interpreters[name])
+                                     command=partial(self.root.set_interpreter, interpreter),
+                                     variable=self.root.interpreters[name])
 
         codemenu.add_cascade(label="Choose Mode", menu=langmenu)
 
@@ -90,12 +91,14 @@ class MenuBar(Menu):
         helpmenu.add_command(label="Documentation",   command=self.root.OpenGitHub)
         self.add_cascade(label="Help", menu=helpmenu)
 
-        # Add to root
+        # Http server
+        servermenu = Menu(self, tearoff=0)
+        servermenu.add_command(label="Start Server", command=self.start_server)
+        servermenu.add_command(label="Stop Server", command=self.stop_server)
+        self.add_cascade(label="Http Server", menu=servermenu)
 
         self.visible = visible
-
         if self.visible:
-
             master.root.config(menu=self)
 
     def toggle(self, *args, **kwargs):
@@ -105,7 +108,7 @@ class MenuBar(Menu):
 
     def save_file(self, event=None):
         """ Opens a save file dialog """
-        lang_files = ("{} file".format(repr(self.root.lang)), self.root.lang.filetype )
+        lang_files = ("{} file".format(repr(self.root.lang)), self.root.lang.filetype)
         all_files = ("All files", "*.*")
         fn = tkFileDialog.asksaveasfilename(title="Save as...", filetypes=(lang_files, all_files), defaultextension=lang_files[1])
         if len(fn):
@@ -120,7 +123,7 @@ class MenuBar(Menu):
 
     def open_file(self, event=None):
         """ Opens a fileopen dialog then sets the text box contents to the contents of the file """
-        lang_files = ("{} files".format(repr(self.root.lang)), self.root.lang.filetype )
+        lang_files = ("{} files".format(repr(self.root.lang)), self.root.lang.filetype)
         all_files = ("All files", "*.*")
         fn = tkFileDialog.askopenfilename(title="Open file", filetypes=(lang_files, all_files))
 
@@ -129,9 +132,15 @@ class MenuBar(Menu):
             with open(fn) as f:
                 contents = f.read()
 
-            self.root.apply_operation( self.root.get_set_all_operation(contents) )
+            self.root.apply_operation(self.root.get_set_all_operation(contents))
 
         return
+
+    def start_server(self, event=None):
+        pass
+
+    def stop_server(self, event=None):
+        pass
 
 
 class PopupMenu(Menu):
@@ -147,7 +156,7 @@ class PopupMenu(Menu):
         self.add_separator()
         self.add_command(label="Select All", command=self.root.select_all, accelerator="Ctrl+A")
 
-        self.bind("<FocusOut>", self.hide) # hide when clicked off
+        self.bind("<FocusOut>", self.hide)  # hide when clicked off
 
     def is_active(self):
         return self.active
@@ -173,9 +182,10 @@ class PopupMenu(Menu):
 
         return
 
+
 class ConsolePopupMenu(PopupMenu):
     def __init__(self, master):
-        self.root = master # console widget
+        self.root = master  # console widget
         disable = lambda *e: None
         Menu.__init__(self, master.root, tearoff=0, postcommand=self.update)
         self.add_command(label="Undo", command=disable, accelerator="Ctrl+Z", state=DISABLED)
@@ -187,7 +197,7 @@ class ConsolePopupMenu(PopupMenu):
         self.add_separator()
         self.add_command(label="Select All", command=self.root.select_all, accelerator="Ctrl+A")
 
-        self.bind("<FocusOut>", self.hide) # hide when clicked off
+        self.bind("<FocusOut>", self.hide)  # hide when clicked off
 
     def update(self):
         self.entryconfig("Copy", state=NORMAL if self.root.has_selection() else DISABLED)
