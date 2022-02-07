@@ -1,11 +1,11 @@
 from __future__ import absolute_import
 
 try:
-    from Tkinter import Menu, DISABLED, NORMAL, StringVar
+    from Tkinter import Menu, DISABLED, NORMAL, StringVar, END
     import tkFileDialog
     import tkMessageBox
 except ImportError:
-    from tkinter import Menu, DISABLED, NORMAL, StringVar
+    from tkinter import Menu, DISABLED, NORMAL, StringVar, END
     from tkinter import filedialog as tkFileDialog
     from tkinter import messagebox as tkMessageBox
 
@@ -17,7 +17,7 @@ from ..message import *
 
 class MenuBar(Menu):
     def __init__(self, master, visible=True):
-
+        self.pindex = 0
         self.root = master
 
         Menu.__init__(self, master.root)
@@ -97,6 +97,11 @@ class MenuBar(Menu):
         servermenu.add_command(label="Stop Server", command=self.stop_server)
         self.add_cascade(label="Http Server", menu=servermenu)
 
+        # Manual message
+        testmenu = Menu(self, tearoff=0)
+        testmenu.add_command(label="Insert char", command=self.insertchar)
+        self.add_cascade(label="Manual message", menu=testmenu)
+
         self.visible = visible
         if self.visible:
             master.root.config(menu=self)
@@ -141,6 +146,29 @@ class MenuBar(Menu):
 
     def stop_server(self, event=None):
         pass
+
+    def insertchar(self, event=None):
+        # self.root.text.put(msg)
+
+        #str = 'p1 >> play("VB")'
+        # for c in str:
+        #    keypress = FakeKeypress(c)
+        #    self.root.key_press(keypress)
+        players = ["p1", "p2", "p3", "p4", "p5"]
+
+        try:
+            self.root.playerBuilder.addPlayer(players[self.pindex], "pluck")
+            self.root.playerBuilder.editPlayer(players[self.pindex], "amp", "1")
+            self.root.playerBuilder.editPlayer(players[self.pindex], "oct", "5")
+            self.root.playerBuilder.editPlayer(players[self.pindex], "amp", "0.5")
+            self.root.single_line_evaluate()
+        except Exception as e:
+            print(e)
+
+        self.pindex += 1
+        # self.root.text.marker.move(3)
+        # self.root.client.send(msg)
+        #self.root.text.insert(END, text)
 
 
 class PopupMenu(Menu):

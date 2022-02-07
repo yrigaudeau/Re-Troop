@@ -15,6 +15,8 @@ from .line_numbers import LineNumbers
 from .menu_bar import MenuBar, PopupMenu
 from .mouse import Mouse
 
+from ..remote_control.PlayerBuilder import PlayerBuilder
+
 try:
     from Tkinter import *
     import tkFileDialog
@@ -113,6 +115,7 @@ class Interface(BasicInterface):
         self.interpreters = {name: BooleanVar() for name in langnames}
 
         self.client = client
+        self.playerBuilder = PlayerBuilder(self)
 
         # Set logging
 
