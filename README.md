@@ -1,4 +1,26 @@
-# Troop v0.10.3
+# Re:Troop v0.10.3
+
+## About this fork
+
+Re:Troop is a fork of Troop which add the ability to control players through http request using a Flask REST server.
+
+`pip install flask-restful`
+
+After being created through the menu bar, the players can be controlled by sending a POST request to the '/player' endpoint on port 5000 e.g. 'http://localhost:5000/player'.
+
+The request content is a json type taking the following arguments : 
+- 'name' refers to the name of the player
+- 'attr' refers to the attribute to modify
+- 'value' refers to the value of the modified attribute
+
+An example request content can be :
+```json
+{
+	"name": "p1",
+	"attr": "degree",
+	"value": "[1,2,3,4]"
+}
+```
 
 ## Real-time collaborative live coding
 
