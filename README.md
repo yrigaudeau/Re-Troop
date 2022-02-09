@@ -2,7 +2,7 @@
 
 ## About this fork
 
-Re:Troop is a fork of Troop which add the ability to control players through http request using a Flask REST server.
+Re:Troop is a fork of Troop which add the ability to control players through HTTP requests using a Flask REST server.
 
 `pip install flask-restful`
 
@@ -21,6 +21,10 @@ An example request content can be :
 	"value": "[1,2,3,4]"
 }
 ```
+
+## Why ?
+
+¯\\\_(ツ)_/¯
 
 ## Real-time collaborative live coding
 
