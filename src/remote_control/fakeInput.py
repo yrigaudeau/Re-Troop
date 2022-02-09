@@ -9,7 +9,6 @@ class FakeInput:
         self.interface = interface
 
     def writeString(self, string, index):
-        print(index)
         self.interface.text.marker.move(index)
         for c in string:
             self.interface.key_press(FakeKeypress(c, c))

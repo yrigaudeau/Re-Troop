@@ -1,11 +1,11 @@
 from __future__ import absolute_import
 
 try:
-    from Tkinter import Menu, DISABLED, NORMAL, StringVar, END
+    from Tkinter import Menu, DISABLED, NORMAL, StringVar
     import tkFileDialog
     import tkMessageBox
 except ImportError:
-    from tkinter import Menu, DISABLED, NORMAL, StringVar, END
+    from tkinter import Menu, DISABLED, NORMAL, StringVar
     from tkinter import filedialog as tkFileDialog
     from tkinter import messagebox as tkMessageBox
 
@@ -99,8 +99,8 @@ class MenuBar(Menu):
 
         # Manual message
         testmenu = Menu(self, tearoff=0)
-        testmenu.add_command(label="Insert char", command=self.insertchar)
-        self.add_cascade(label="Manual message", menu=testmenu)
+        testmenu.add_command(label="Create Player", command=self.create_player)
+        self.add_cascade(label="Players", menu=testmenu)
 
         self.visible = visible
         if self.visible:
@@ -142,33 +142,20 @@ class MenuBar(Menu):
         return
 
     def start_server(self, event=None):
-        pass
+        try:
+            self.root.httpServer.start()
+            print("HTTP server started on port {}!".format(self.root.httpServer.port))
+        except RuntimeError as e:
+            print("Server already started")
 
     def stop_server(self, event=None):
-        pass
+        self.root.httpServer.stop()
 
-    def insertchar(self, event=None):
-        # self.root.text.put(msg)
-
-        #str = 'p1 >> play("VB")'
-        # for c in str:
-        #    keypress = FakeKeypress(c)
-        #    self.root.key_press(keypress)
-        players = ["p1", "p2", "p3", "p4", "p5"]
-
-        try:
-            self.root.playerBuilder.addPlayer(players[self.pindex], "pluck")
-            self.root.playerBuilder.editPlayer(players[self.pindex], "amp", "1")
-            self.root.playerBuilder.editPlayer(players[self.pindex], "oct", "5")
-            self.root.playerBuilder.editPlayer(players[self.pindex], "amp", "0.5")
-            self.root.single_line_evaluate()
-        except Exception as e:
-            print(e)
-
-        self.pindex += 1
-        # self.root.text.marker.move(3)
-        # self.root.client.send(msg)
-        #self.root.text.insert(END, text)
+    def create_player(self, event=None):
+        if not self.root.playerInterface.visible:
+            self.root.playerInterface.create()
+        else:
+            self.root.playerInterface.lift()
 
 
 class PopupMenu(Menu):

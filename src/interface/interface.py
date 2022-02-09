@@ -15,7 +15,9 @@ from .line_numbers import LineNumbers
 from .menu_bar import MenuBar, PopupMenu
 from .mouse import Mouse
 
-from ..remote_control.PlayerBuilder import PlayerBuilder
+from ..remote_control.playerBuilder import PlayerBuilder
+from ..remote_control.httpServer import HttpServer
+from ..remote_control.playerInterface import PlayerInterface
 
 try:
     from Tkinter import *
@@ -116,6 +118,8 @@ class Interface(BasicInterface):
 
         self.client = client
         self.playerBuilder = PlayerBuilder(self)
+        self.httpServer = HttpServer(self)
+        self.playerInterface = PlayerInterface()
 
         # Set logging
 

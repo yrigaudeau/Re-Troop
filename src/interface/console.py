@@ -75,6 +75,8 @@ class Console(Text):
             while True:
                 
                 string = self.queue.get_nowait().rstrip() # Remove trailing whitespace
+                if not isinstance(string, str):
+                    continue
                 
                 match = find_colour(string)
 
