@@ -119,7 +119,7 @@ class Interface(BasicInterface):
         self.client = client
         self.playerBuilder = PlayerBuilder(self)
         self.httpServer = HttpServer(self)
-        self.playerInterface = PlayerInterface()
+        self.playerInterface = PlayerInterface(self)
 
         # Set logging
 
