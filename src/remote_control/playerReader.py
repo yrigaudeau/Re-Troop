@@ -1,5 +1,6 @@
 import re
 
+
 class PlayerReader():
     def __init__(self, interface):
         self.interface = interface

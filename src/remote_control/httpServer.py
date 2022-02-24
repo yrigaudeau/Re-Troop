@@ -9,7 +9,7 @@ mutex = Lock()
 
 class PlayerController(Resource):
     def get(self):
-        return "Hello World"
+        return make_response("Hello World", 200)
 
     def post(self):
         global _interface, mutex
@@ -27,7 +27,7 @@ class PlayerController(Resource):
                 raise Exception(args["name"] + " n'est pas un player existant")
             _interface.playerBuilder.createPlayer(args["name"], instru)
             _interface.playerBuilder.setAttribute(args["attr"], args["value"])
-            _interface.add_to_send_queue(MSG_EVALUATE_STRING(_interface.text.marker.id, str(_interface.playerBuilder.getPlayer())))
+            _interface.add_to_send_queue(MSG_EVALUATE_STRING(_interface.text.marker.id, _interface.playerBuilder.player))
         except Exception as e:
             return make_response(str(e), 400)
         mutex.release()

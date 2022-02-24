@@ -1,4 +1,3 @@
-
 class Method():
     def __init__(self, name, value):
         self.name = name
@@ -18,7 +17,7 @@ class Attribute():
 
 
 class Player():
-    def __init__(self, name, instrument, attribute = None, method = None):
+    def __init__(self, name, instrument, attribute=None, method=None):
         self.name = name
         self.instrument = instrument
         self.attribute = attribute
@@ -47,7 +46,3 @@ class PlayerBuilder():
 
     def setMethod(self, name, value):
         self.player.setMethod(Method(name, value))
-
-    def getPlayer(self):
-        return self.player
-
