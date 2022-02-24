@@ -13,7 +13,6 @@ from functools import partial
 
 from ..config import *
 from ..message import *
-from ..remote_control.GhostCoder import Grammar as gr
 
 
 class MenuBar(Menu):

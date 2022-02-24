@@ -16,8 +16,8 @@ from .menu_bar import MenuBar, PopupMenu
 from .mouse import Mouse
 
 from ..remote_control.playerBuilder import PlayerBuilder
+from ..remote_control.playerReader import PlayerReader
 from ..remote_control.httpServer import HttpServer
-from ..remote_control.playerInterface import PlayerInterface
 
 try:
     from Tkinter import *
@@ -118,8 +118,10 @@ class Interface(BasicInterface):
 
         self.client = client
         self.playerBuilder = PlayerBuilder(self)
+        self.playerReader = PlayerReader(self)
         self.httpServer = HttpServer(self)
-        self.playerInterface = PlayerInterface(self)
+        #Auto start server
+        self.httpServer.start()
 
         # Set logging
 
@@ -350,6 +352,7 @@ class Interface(BasicInterface):
 
         # Set the window focus
         self.text.focus_force()
+
 
     def kill(self):
         """ Close socket connections and terminate the application """
