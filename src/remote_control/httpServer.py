@@ -29,6 +29,7 @@ class PlayerController(Resource):
             _interface.playerBuilder.setAttribute(args["attr"], args["value"])
             _interface.add_to_send_queue(MSG_EVALUATE_STRING(_interface.text.marker.id, _interface.playerBuilder.player))
         except Exception as e:
+            mutex.release()
             return make_response(str(e), 400)
         mutex.release()
 
