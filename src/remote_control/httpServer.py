@@ -5,17 +5,14 @@ from threading import Thread, Lock
 _interface = None
 mutex = Lock()
 
+
 class PlayerController(Resource):
     def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('test', type=str, required=True)
-        args = parser.parse_args()
-        print(args['test'])
-        return args['test']
+        return 
 
     def post(self):
         global _interface, mutex
-        
+
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True)
         parser.add_argument('attr', type=str, required=True)
@@ -30,7 +27,7 @@ class PlayerController(Resource):
             except Exception as e:
                 return str(e)
             mutex.release()
-        
+
         return
 
 
@@ -43,7 +40,7 @@ class HttpServer():
         self.api = Api(self.app)
         self.api.add_resource(PlayerController, '/player')
         self.server = Thread(target=lambda: self.app.run(host="0.0.0.0", debug=False, port=self.port))
-        #print(self.api.resources)
+        # print(self.api.resources)
 
     def start(self):
         self.server.start()

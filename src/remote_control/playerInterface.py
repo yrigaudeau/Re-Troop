@@ -35,7 +35,7 @@ class PlayerInterface:
         Button(self.window, text="Create Player", command=self.createPlayer).pack(padx=5, pady=5, side=BOTTOM)
 
         self.visible = True
-        #self.window.grab_set()
+        # self.window.grab_set()
         self.window.mainloop()
 
     def createPlayer(self):

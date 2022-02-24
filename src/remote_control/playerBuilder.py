@@ -1,6 +1,7 @@
 from .fakeInput import FakeInput
 from ..message import *
 
+
 class Attribute:
     def __init__(self, name, value):
         self.name = name
@@ -102,15 +103,14 @@ class PlayerBuilder:
         player.editAttribute(attributeName, value)
         attribute = player.getAttribute(attributeName)
 
-        #if newAttr:
-        #    # Write new player
-        #    self.fakeInput.writeString(str(attribute), self.getPlayerIndex(playerName)-len(attribute)-2)
-        #else:
-        #    # Write modifications only don't rewrite all
-        #    self.fakeInput.backSpace(oldAttrLen, self.getPlayerIndex(playerName)-len(player)+oldAttrIndex-2)
-        #    self.fakeInput.writeString(str(attribute), self.getPlayerIndex(playerName)-len(player)+oldAttrIndex-oldAttrLen-2)
+        if newAttr:
+            # Write new player
+            self.fakeInput.writeString(str(attribute), self.getPlayerIndex(playerName)-len(attribute)-2)
+        else:
+            # Write modifications only don't rewrite all
+            self.fakeInput.backSpace(oldAttrLen, self.getPlayerIndex(playerName)-len(player)+oldAttrIndex-2)
+            self.fakeInput.writeString(str(attribute), self.getPlayerIndex(playerName)-len(player)+oldAttrIndex-oldAttrLen-2)
 
-        self.interface.add_to_send_queue(MSG_EVALUATE_STRING(self.interface.text.marker.id, str(player)))
         return
 
     def removePlayer(self, playerName):
