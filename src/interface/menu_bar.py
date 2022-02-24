@@ -13,6 +13,7 @@ from functools import partial
 
 from ..config import *
 from ..message import *
+from ..remote_control.GhostCoder import Grammar as gr
 
 
 class MenuBar(Menu):
@@ -97,9 +98,11 @@ class MenuBar(Menu):
         servermenu.add_command(label="Stop Server", command=self.stop_server)
         self.add_cascade(label="Http Server", menu=servermenu)
 
-        # Manual message
+        # Players
         testmenu = Menu(self, tearoff=0)
         testmenu.add_command(label="Create Player", command=self.create_player)
+        testmenu.add_command(label="Read Players", command=self.read_players)
+        testmenu.add_command(label="eval str", command=self.eval_player)
         self.add_cascade(label="Players", menu=testmenu)
 
         self.visible = visible
@@ -156,6 +159,27 @@ class MenuBar(Menu):
             self.root.playerInterface.create()
         else:
             self.root.playerInterface.lift()
+
+    def read_players(self, event=None):
+        text = self.root.text.get('1.0', 'end-1c')
+        p = re.compile("(?P<player>\w+)\s*>>\s*(?P<instru>\w+)\((?P<args>.*)\)")
+        p_args = re.compile("(?P<name>\w*)\s*=\s*(?P<value>(\w*[{([]+[^)\]}]*[)\]}]*)*([^,{([]+)*)")
+        match = p.match(text)
+        if match is not None:
+            print(match.groupdict()["player"])
+            print(match.groupdict()["instru"])
+            args = match.groupdict()["args"].split("=")
+            print(args)
+            list_args = p_args.findall(args)
+            print(list_args)
+            
+
+        #degree, args = gr.getArgs(text)
+        #print(degree)
+        #print(args)
+
+    def eval_player(self, event=None):
+        self.root.add_to_send_queue(MSG_EVALUATE_STRING(self.root.text.marker.id, "p1 >> pluck([4,5,3,2])"))
 
 
 class PopupMenu(Menu):
