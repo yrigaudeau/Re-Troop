@@ -7,11 +7,7 @@ mutex = Lock()
 
 class PlayerController(Resource):
     def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('test', type=str, required=True)
-        args = parser.parse_args()
-        print(args['test'])
-        return args['test']
+        return "Hello World"
 
     def post(self):
         global _interface, mutex
