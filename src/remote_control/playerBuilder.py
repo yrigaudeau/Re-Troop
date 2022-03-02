@@ -30,7 +30,7 @@ class Player():
         self.method = method
 
     def __str__(self):
-        return "{} >> {}({}){}".format(self.name, self.instrument, self.attribute if self.attribute != None else "", self.method if self.method != None else "")
+        return "{} >> {}({}.modifier,{}){}".format(self.name, self.instrument, self.name, self.attribute if self.attribute != None else "", self.method if self.method != None else "")
 
 
 class PlayerBuilder():
