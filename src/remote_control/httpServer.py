@@ -22,11 +22,12 @@ class PlayerController(Resource):
 
         mutex.acquire()
         try:
-            instru = _interface.playerReader.getInstrument(args["name"])
+            instru, otherAttr = _interface.playerReader.getInstrument(args["name"])
             if instru is None:
                 raise Exception(args["name"] + " n'est pas un player existant")
             _interface.playerBuilder.createPlayer(args["name"], instru)
             _interface.playerBuilder.setAttribute(args["attr"], args["value"])
+            _interface.playerBuilder.setOtherAttributes(otherAttr)
             _interface.add_to_send_queue(MSG_EVALUATE_STRING(_interface.text.marker.id, _interface.playerBuilder.player))
         except Exception as e:
             mutex.release()
