@@ -1,5 +1,10 @@
 # Re:Troop v0.10.3
 
+## About this branch
+
+Re:Troop listen for socket connection on port 42123.  
+The data received is a raw string containing a json object like the one below.
+
 ## About this fork
 
 Re:Troop is a fork of Troop which add the ability to control players through HTTP requests using a Flask REST server.
