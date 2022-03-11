@@ -17,7 +17,7 @@ from .mouse import Mouse
 
 from ..remote_control.playerBuilder import PlayerBuilder
 from ..remote_control.playerReader import PlayerReader
-from ..remote_control.httpServer import HttpServer
+from ..remote_control.socketServer import SocketServer
 
 try:
     from Tkinter import *
@@ -119,9 +119,9 @@ class Interface(BasicInterface):
         self.client = client
         self.playerBuilder = PlayerBuilder(self)
         self.playerReader = PlayerReader(self)
-        self.httpServer = HttpServer(self)
+        self.socketServer = SocketServer(self)
         #Auto start server
-        self.httpServer.start()
+        self.socketServer.start()
 
         # Set logging
 

@@ -91,12 +91,6 @@ class MenuBar(Menu):
         helpmenu.add_command(label="Documentation",   command=self.root.OpenGitHub)
         self.add_cascade(label="Help", menu=helpmenu)
 
-        # Http server
-        servermenu = Menu(self, tearoff=0)
-        servermenu.add_command(label="Start Server", command=self.start_server)
-        servermenu.add_command(label="Stop Server", command=self.stop_server)
-        self.add_cascade(label="Http Server", menu=servermenu)
-
         self.visible = visible
         if self.visible:
             master.root.config(menu=self)
@@ -135,16 +129,6 @@ class MenuBar(Menu):
             self.root.apply_operation(self.root.get_set_all_operation(contents))
 
         return
-
-    def start_server(self, event=None):
-        try:
-            self.root.httpServer.start()
-            print("HTTP server started on port {}!".format(self.root.httpServer.port))
-        except RuntimeError as e:
-            print("Server already started")
-
-    def stop_server(self, event=None):
-        self.root.httpServer.stop()
 
 
 class PopupMenu(Menu):
